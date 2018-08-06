@@ -1,7 +1,9 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
+#include <QMediaPlayer>
 #include "ui_ZHPlayerBaseUI.h"
+#include "MusicManager.h"
 
 class ZHPlayerBaseUI : public QMainWindow
 {
@@ -9,7 +11,13 @@ class ZHPlayerBaseUI : public QMainWindow
 
 public:
 	ZHPlayerBaseUI(QWidget *parent = Q_NULLPTR);
+public slots:
+	void OnTouchPlay();
+private:
+	void initConnect();
 
 private:
-	Ui::ZHPlayerBaseUIClass ui;
+	Ui::ZHPlayerBaseUIClass			ui;
+	CMusicManager*					m_pMusicManager;
+	QMediaPlayer*					m_pMusicPlayer;
 };
