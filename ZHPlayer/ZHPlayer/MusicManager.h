@@ -17,13 +17,13 @@ public:
 	QUrl* GetCurrentMusic();
 	QUrl* GetNextMusic();
 	ChangeType GetChangType();
+	int SetMusicPath(QString strPath);
 
 private:
 	int						m_nCurMusicIndex;
 	int						m_nLastMusicIndex;
 	ChangeType				m_enChaneType;
-	//list<QUrl*>				m_listMusic
-	std::vector<QUrl*>			m_listMusic;
+	std::vector<QUrl*>			m_vecMusic;
 };
 
 

@@ -13,6 +13,8 @@ public:
 	ZHPlayerBaseUI(QWidget *parent = Q_NULLPTR);
 public slots:
 	void OnTouchPlay();
+	void OnTouchGetMusicPath();
+	void OnTouchNext();
 private:
 	void initConnect();
 

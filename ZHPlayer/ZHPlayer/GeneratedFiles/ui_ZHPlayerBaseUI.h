@@ -37,7 +37,7 @@ public:
         if (ZHPlayerBaseUIClass->objectName().isEmpty())
             ZHPlayerBaseUIClass->setObjectName(QStringLiteral("ZHPlayerBaseUIClass"));
         ZHPlayerBaseUIClass->resize(528, 63);
-        ZHPlayerBaseUIClass->setWindowOpacity(0.5);
+        ZHPlayerBaseUIClass->setWindowOpacity(1);
         centralWidget = new QWidget(ZHPlayerBaseUIClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         m_pBtnLastMusic = new QPushButton(centralWidget);
