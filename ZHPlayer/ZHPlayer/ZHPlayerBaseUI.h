@@ -15,6 +15,7 @@ public slots:
 	void OnTouchPlay();
 	void OnTouchGetMusicPath();
 	void OnTouchNext();
+	void OnTouchLast();
 private:
 	void initConnect();
 

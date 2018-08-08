@@ -112,6 +112,7 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MusicConfig.cpp" />
     <ClCompile Include="MusicManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ZHPlayerBaseUI.cpp" />
@@ -126,6 +127,7 @@
     <QtRcc Include="ZHPlayerBaseUI.qrc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MusicConfig.h" />
     <ClInclude Include="MusicManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

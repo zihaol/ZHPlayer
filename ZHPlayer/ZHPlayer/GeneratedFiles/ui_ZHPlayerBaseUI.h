@@ -78,7 +78,7 @@ public:
         m_pBtnLastMusic->setText(QApplication::translate("ZHPlayerBaseUIClass", "\344\270\212\344\270\200\351\246\226", nullptr));
         m_pBtnNextMusic->setText(QApplication::translate("ZHPlayerBaseUIClass", "\344\270\213\344\270\200\351\246\226", nullptr));
         m_pBtnPlay->setText(QApplication::translate("ZHPlayerBaseUIClass", "\346\222\255\346\224\276", nullptr));
-        m_pLabelMusicName->setText(QApplication::translate("ZHPlayerBaseUIClass", "TextLabel", nullptr));
+        m_pLabelMusicName->setText(QApplication::translate("ZHPlayerBaseUIClass", "music", nullptr));
         m_pBtnVolue->setText(QApplication::translate("ZHPlayerBaseUIClass", "\351\237\263\351\207\217", nullptr));
         m_pBtnChangeType->setText(QApplication::translate("ZHPlayerBaseUIClass", "\346\250\241\345\274\217", nullptr));
         m_pBtnOpen->setText(QApplication::translate("ZHPlayerBaseUIClass", "\346\211\223\345\274\200", nullptr));

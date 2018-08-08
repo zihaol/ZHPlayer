@@ -1,13 +1,8 @@
 #pragma once
 #include <QUrl>
 #include <vector>
+#include "MusicConfig.h"
 
-enum ChangeType
-{
-	enChange_Type_Normal = 0,
-	enChange_Type_Rand = 1,
-	enChange_Type_OnleOne = 2,
-};
 
 class CMusicManager
 {
@@ -16,14 +11,17 @@ public:
 	~CMusicManager();
 	QUrl* GetCurrentMusic();
 	QUrl* GetNextMusic();
+	QUrl* GetLastMusic();
 	ChangeType GetChangType();
 	int SetMusicPath(QString strPath);
+	void LoadMusic();
 
 private:
 	int						m_nCurMusicIndex;
 	int						m_nLastMusicIndex;
 	ChangeType				m_enChaneType;
 	std::vector<QUrl*>			m_vecMusic;
+	CMusicConfig*			m_pMusicConfig;
 };
 
 

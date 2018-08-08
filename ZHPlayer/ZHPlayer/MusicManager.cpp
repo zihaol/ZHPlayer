@@ -7,7 +7,8 @@ CMusicManager::CMusicManager()
 	, m_nLastMusicIndex(0)
 	, m_enChaneType(ChangeType::enChange_Type_Normal)
 {
-
+	m_pMusicConfig = new CMusicConfig;
+	LoadMusic();
 }
 
 CMusicManager::~CMusicManager()
@@ -15,6 +16,20 @@ CMusicManager::~CMusicManager()
 
 }
 
+void CMusicManager::LoadMusic()
+{
+	int nIndex = 0;
+	while (true)
+	{
+		QString strPath = m_pMusicConfig->GetMusic(nIndex);
+		if (strPath.isEmpty())
+		{
+			break;
+		}
+		SetMusicPath(strPath);
+		nIndex++;
+	}
+}
 int CMusicManager::SetMusicPath(QString strPath)
 {
 	int nRet = 0;
@@ -36,6 +51,7 @@ int CMusicManager::SetMusicPath(QString strPath)
 			}
 		}
 		m_vecMusic.push_back(pUrl);
+		m_pMusicConfig->SaveMusic(m_vecMusic.size() - 1, strPath);
 	} while (false);
 	return nRet;
 }
@@ -53,6 +69,21 @@ QUrl* CMusicManager::GetCurrentMusic()
 	}
 	m_nLastMusicIndex = m_nCurMusicIndex;
 	return m_vecMusic[m_nCurMusicIndex];
+}
+
+QUrl* CMusicManager::GetLastMusic()
+{
+	if (0 == m_vecMusic.size())
+	{
+		return nullptr;
+	}
+
+	if (m_nLastMusicIndex > m_vecMusic.size())
+	{
+		m_nLastMusicIndex = 0;
+	}
+	m_nCurMusicIndex = m_nLastMusicIndex;
+	return m_vecMusic[m_nLastMusicIndex];
 }
 
 QUrl* CMusicManager::GetNextMusic()
