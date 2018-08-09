@@ -16,6 +16,10 @@ public slots:
 	void OnTouchGetMusicPath();
 	void OnTouchNext();
 	void OnTouchLast();
+	void OnSliderMoved();
+	//QMediaPlayer–≈∫≈≤€
+	void OnUpdatePosition(qint64 nPosition);
+	void OnUpdateDuration(qint64 nDuration);
 private:
 	void initConnect();
 

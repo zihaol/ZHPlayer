@@ -31,6 +31,7 @@ public:
     QPushButton *m_pBtnVolue;
     QPushButton *m_pBtnChangeType;
     QPushButton *m_pBtnOpen;
+    QLabel *m_pLabelTatalTime;
 
     void setupUi(QMainWindow *ZHPlayerBaseUIClass)
     {
@@ -65,6 +66,9 @@ public:
         m_pBtnOpen = new QPushButton(centralWidget);
         m_pBtnOpen->setObjectName(QStringLiteral("m_pBtnOpen"));
         m_pBtnOpen->setGeometry(QRect(450, 0, 35, 61));
+        m_pLabelTatalTime = new QLabel(centralWidget);
+        m_pLabelTatalTime->setObjectName(QStringLiteral("m_pLabelTatalTime"));
+        m_pLabelTatalTime->setGeometry(QRect(330, 30, 54, 12));
         ZHPlayerBaseUIClass->setCentralWidget(centralWidget);
 
         retranslateUi(ZHPlayerBaseUIClass);
@@ -82,6 +86,7 @@ public:
         m_pBtnVolue->setText(QApplication::translate("ZHPlayerBaseUIClass", "\351\237\263\351\207\217", nullptr));
         m_pBtnChangeType->setText(QApplication::translate("ZHPlayerBaseUIClass", "\346\250\241\345\274\217", nullptr));
         m_pBtnOpen->setText(QApplication::translate("ZHPlayerBaseUIClass", "\346\211\223\345\274\200", nullptr));
+        m_pLabelTatalTime->setText(QApplication::translate("ZHPlayerBaseUIClass", "0:00", nullptr));
     } // retranslateUi
 
 };
