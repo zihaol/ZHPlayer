@@ -6,9 +6,56 @@ ZHPlayerBaseUI::ZHPlayerBaseUI(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+	ui.m_pSliderVoice->setVisible(false);
 	m_pMusicManager = new CMusicManager();
 	m_pMusicPlayer = new QMediaPlayer();
+
+	ui.m_pSliderVoice->setRange(0, 100);
 	initConnect();
+	InitConfig();
+}
+
+void ZHPlayerBaseUI::UpdatePlayStatus()
+{
+	ChangeType type = m_pMusicManager->GetChangType();
+	QString strStatus = u8"Ë³Ðò";
+	switch (type)
+	{
+	case enChange_Type_Normal:
+		strStatus = u8"Ë³Ðò";
+		break;
+	case enChange_Type_OnleOne:
+		strStatus = u8"µ¥Çú";
+		break;
+	case enChange_Type_Rand:
+		strStatus = u8"Ëæ»ú";
+		break;
+	default:
+		strStatus = u8"ÎÞÐ§";
+		break;
+	}
+
+	if (ui.m_pLabelType != nullptr)
+	{
+		ui.m_pLabelType->setText(strStatus);
+	}
+}
+
+void ZHPlayerBaseUI::InitConfig()
+{
+	int nVolume = m_pMusicManager->GetVoice();
+	ui.m_pSliderVoice->setValue(nVolume);
+	m_pMusicPlayer->setVolume(nVolume);
+	UpdatePlayStatus();
+	//ui.m_pLabelType->setText(u8"Ë³");
+}
+
+ZHPlayerBaseUI::~ZHPlayerBaseUI()
+{
+	//if (nullptr != m_pMusicManager)
+	//{
+	//	m_pMusicManager->SetVoice(ui.m_pSliderVoice->value());
+	//}
 }
 
 void ZHPlayerBaseUI::OnTouchGetMusicPath()
@@ -22,7 +69,19 @@ void ZHPlayerBaseUI::OnUpdateDuration(qint64 nDuration)
 	ui.m_pSlider->setRange(0, nDuration);
 }
 
-void ZHPlayerBaseUI::OnSliderMoved()
+void ZHPlayerBaseUI::OnSliderVoiceMoved()
+{
+	int nVolume = ui.m_pSliderVoice->value();
+	if (nullptr != m_pMusicPlayer)
+	{
+		m_pMusicPlayer->setVolume(nVolume);
+	}
+	if (nullptr != m_pMusicManager)
+	{
+		m_pMusicManager->SetVoice(nVolume);
+	}
+}
+void ZHPlayerBaseUI::OnSliderPositionMoved()
 {
 	int nValue = ui.m_pSlider->value();
 	if (m_pMusicPlayer != nullptr)
@@ -59,6 +118,15 @@ void ZHPlayerBaseUI::OnTouchLast()
 	}
 }
 
+void ZHPlayerBaseUI::OnTouchPlayType()
+{
+	if (m_pMusicManager != nullptr)
+	{
+		m_pMusicManager->GetNextType();
+	}
+	UpdatePlayStatus();
+}
+
 void ZHPlayerBaseUI::OnTouchNext()
 {
 	QUrl* pUrl = m_pMusicManager->GetNextMusic();
@@ -68,6 +136,11 @@ void ZHPlayerBaseUI::OnTouchNext()
 		ui.m_pLabelMusicName->setText(pUrl->toString());
 		m_pMusicPlayer->play();
 	}
+}
+
+void ZHPlayerBaseUI::OnTouchVolume()
+{
+	ui.m_pSliderVoice->setVisible(!ui.m_pSliderVoice->isVisible());
 }
 
 void ZHPlayerBaseUI::OnTouchPlay()
@@ -91,10 +164,13 @@ void ZHPlayerBaseUI::initConnect()
 	QObject::connect(ui.m_pBtnOpen, SIGNAL(clicked()), this, SLOT(OnTouchGetMusicPath()));
 	QObject::connect(ui.m_pBtnNextMusic, SIGNAL(clicked()), this, SLOT(OnTouchNext()));
 	QObject::connect(ui.m_pBtnLastMusic, SIGNAL(clicked()), this, SLOT(OnTouchLast()));
+	QObject::connect(ui.m_pBtnVolue, SIGNAL(clicked()), this, SLOT(OnTouchVolume()));
+	QObject::connect(ui.m_pBtnChangeType, SIGNAL(clicked()), this, SLOT(OnTouchPlayType()));
 
 	QObject::connect(m_pMusicPlayer, &QMediaPlayer::positionChanged, this, &ZHPlayerBaseUI::OnUpdatePosition);
 	QObject::connect(m_pMusicPlayer, &QMediaPlayer::durationChanged, this, &ZHPlayerBaseUI::OnUpdateDuration);
-	QObject::connect(ui.m_pSlider, &QSlider::sliderMoved, this, &ZHPlayerBaseUI::OnSliderMoved);
+	QObject::connect(ui.m_pSlider, &QSlider::sliderMoved, this, &ZHPlayerBaseUI::OnSliderPositionMoved);
+	QObject::connect(ui.m_pSliderVoice, &QSlider::sliderMoved, this, &ZHPlayerBaseUI::OnSliderVoiceMoved);
 }
 
 

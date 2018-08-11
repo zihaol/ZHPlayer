@@ -6,6 +6,7 @@ enum ChangeType
 	enChange_Type_Normal = 0,
 	enChange_Type_Rand = 1,
 	enChange_Type_OnleOne = 2,
+	enChange_Type_TypeNum = 3,
 };
 
 struct tagPlayConfig
@@ -23,6 +24,7 @@ public:
 	void LoadConfig();
 	void SavePlayConfig();
 	tagPlayConfig* GetPlayConfig();
+	ChangeType GetPlayType();
 	void SetPlayType(ChangeType enType);
 	void SetCurrentMusicIndex(int nIndex);
 	void SetVolueNum(int nVolue);

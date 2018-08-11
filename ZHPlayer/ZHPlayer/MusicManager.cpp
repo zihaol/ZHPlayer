@@ -5,7 +5,7 @@
 CMusicManager::CMusicManager()
 	: m_nCurMusicIndex(0)
 	, m_nLastMusicIndex(0)
-	, m_enChaneType(ChangeType::enChange_Type_Normal)
+	//, m_enChaneType(ChangeType::enChange_Type_Normal)
 {
 	m_pMusicConfig = new CMusicConfig;
 	LoadMusic();
@@ -30,6 +30,32 @@ void CMusicManager::LoadMusic()
 		nIndex++;
 	}
 }
+
+int CMusicManager::GetVoice()
+{
+	int nRet = 0;
+	do 
+	{
+		if (nullptr == m_pMusicConfig)
+		{
+			break;
+		}
+		nRet = m_pMusicConfig->GetPlayConfig()->nVolueNum;
+	} while (false);
+	return nRet;
+}
+
+ void CMusicManager::SetVoice(int nVoice)
+{
+	 if (nullptr == m_pMusicConfig)
+	 {
+		 return;
+	 }
+	 //m_pMusicConfig->GetPlayConfig()->nVolueNum = nVoice;
+	 m_pMusicConfig->SetVolueNum(nVoice);
+	 m_pMusicConfig->SavePlayConfig();
+}
+
 int CMusicManager::SetMusicPath(QString strPath)
 {
 	int nRet = 0;
@@ -94,7 +120,7 @@ QUrl* CMusicManager::GetNextMusic()
 		return nullptr;
 	}
 
-	if (ChangeType::enChange_Type_Normal == m_enChaneType)
+	if (ChangeType::enChange_Type_Normal == m_pMusicConfig->GetPlayType())
 	{
 		m_nLastMusicIndex = m_nCurMusicIndex;
 		m_nCurMusicIndex++;
@@ -103,13 +129,40 @@ QUrl* CMusicManager::GetNextMusic()
 			m_nCurMusicIndex = 0;
 		}
 	}
+	else if (ChangeType::enChange_Type_Rand == m_pMusicConfig->GetPlayType())
+	{
+		m_nLastMusicIndex = m_nCurMusicIndex;
+		if (m_vecMusic.size() > 0)
+		{
+			m_nCurMusicIndex = rand() % m_vecMusic.size();
+		}
+	}
+	else
+	{
+		m_nCurMusicIndex = m_nCurMusicIndex;
+	}
 	return m_vecMusic[m_nCurMusicIndex];
 
 }
 
+void CMusicManager::GetNextType()
+{
+	ChangeType enChangeType = ChangeType(m_pMusicConfig->GetPlayType() + 1);
+	if (enChangeType >= enChange_Type_TypeNum)
+	{
+		enChangeType = enChange_Type_Normal;
+	}
+
+	if (nullptr != m_pMusicConfig)
+	{
+		m_pMusicConfig->SetPlayType(enChangeType);
+		m_pMusicConfig->SavePlayConfig();
+	}
+}
+
 ChangeType CMusicManager::GetChangType()
 {
-	return enChange_Type_Normal;
+	return m_pMusicConfig->GetPlayType();
 }
 
 

@@ -26,9 +26,9 @@ void CMusicConfig::SavePlayConfig()
 	{
 		return;
 	}
-	m_pConfigFile->setValue("/config/Volue", m_pPlayConfig->nVolueNum);
-	m_pConfigFile->setValue("/config/Type", m_pPlayConfig->enChangeType);
-	m_pConfigFile->setValue("/config/CurrentIndex", m_pPlayConfig->nCurrentMusic);
+	m_pConfigFile->setValue("config/Volue", m_pPlayConfig->nVolueNum);
+	m_pConfigFile->setValue("config/Type", m_pPlayConfig->enChangeType);
+	m_pConfigFile->setValue("config/CurrentIndex", m_pPlayConfig->nCurrentMusic);
 }
 
 tagPlayConfig* CMusicConfig::GetPlayConfig()
@@ -45,6 +45,10 @@ void CMusicConfig::SetPlayType(ChangeType enType)
 	m_pPlayConfig->enChangeType = enType;
 }
 
+ChangeType CMusicConfig::GetPlayType()
+{
+	return m_pPlayConfig->enChangeType;
+}
 void CMusicConfig::SetCurrentMusicIndex(int nIndex)
 {
 	if (nullptr == m_pPlayConfig)

@@ -11,12 +11,18 @@ class ZHPlayerBaseUI : public QMainWindow
 
 public:
 	ZHPlayerBaseUI(QWidget *parent = Q_NULLPTR);
+	~ZHPlayerBaseUI();
+	void InitConfig();
+	void UpdatePlayStatus();
 public slots:
+	void OnTouchVolume();
 	void OnTouchPlay();
 	void OnTouchGetMusicPath();
 	void OnTouchNext();
 	void OnTouchLast();
-	void OnSliderMoved();
+	void OnTouchPlayType();
+	void OnSliderPositionMoved();
+	void OnSliderVoiceMoved();
 	//QMediaPlayer–≈∫≈≤€
 	void OnUpdatePosition(qint64 nPosition);
 	void OnUpdateDuration(qint64 nDuration);
