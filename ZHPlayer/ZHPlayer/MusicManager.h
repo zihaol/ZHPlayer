@@ -18,12 +18,14 @@ public:
 	void SetVoice(int nVoice);
 	int SetMusicPath(QString strPath);
 	void LoadMusic();
+	void SetCurrentMusicByName(QString strName);
+public:
+	std::vector<QUrl*>			m_vecMusic;
 
 private:
 	int						m_nCurMusicIndex;
 	int						m_nLastMusicIndex;
 	//ChangeType				m_enChaneType;
-	std::vector<QUrl*>			m_vecMusic;
 	CMusicConfig*			m_pMusicConfig;
 };
 

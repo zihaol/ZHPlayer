@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
@@ -34,12 +35,13 @@ public:
     QLabel *m_pLabelTatalTime;
     QSlider *m_pSliderVoice;
     QLabel *m_pLabelType;
+    QListWidget *m_pListWidgetMusic;
 
     void setupUi(QMainWindow *ZHPlayerBaseUIClass)
     {
         if (ZHPlayerBaseUIClass->objectName().isEmpty())
             ZHPlayerBaseUIClass->setObjectName(QStringLiteral("ZHPlayerBaseUIClass"));
-        ZHPlayerBaseUIClass->resize(528, 102);
+        ZHPlayerBaseUIClass->resize(528, 329);
         ZHPlayerBaseUIClass->setWindowOpacity(1);
         centralWidget = new QWidget(ZHPlayerBaseUIClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
@@ -78,6 +80,9 @@ public:
         m_pLabelType = new QLabel(centralWidget);
         m_pLabelType->setObjectName(QStringLiteral("m_pLabelType"));
         m_pLabelType->setGeometry(QRect(497, 50, 21, 21));
+        m_pListWidgetMusic = new QListWidget(centralWidget);
+        m_pListWidgetMusic->setObjectName(QStringLiteral("m_pListWidgetMusic"));
+        m_pListWidgetMusic->setGeometry(QRect(3, 93, 521, 230));
         ZHPlayerBaseUIClass->setCentralWidget(centralWidget);
 
         retranslateUi(ZHPlayerBaseUIClass);

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ZHPlayerBaseUI_t {
-    QByteArrayData data[14];
-    char stringdata0[197];
+    QByteArrayData data[17];
+    char stringdata0[239];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,7 +44,10 @@ QT_MOC_LITERAL(9, 124, 18), // "OnSliderVoiceMoved"
 QT_MOC_LITERAL(10, 143, 16), // "OnUpdatePosition"
 QT_MOC_LITERAL(11, 160, 9), // "nPosition"
 QT_MOC_LITERAL(12, 170, 16), // "OnUpdateDuration"
-QT_MOC_LITERAL(13, 187, 9) // "nDuration"
+QT_MOC_LITERAL(13, 187, 9), // "nDuration"
+QT_MOC_LITERAL(14, 197, 19), // "OnItemDoubleClicked"
+QT_MOC_LITERAL(15, 217, 16), // "QListWidgetItem*"
+QT_MOC_LITERAL(16, 234, 4) // "item"
 
     },
     "ZHPlayerBaseUI\0OnTouchVolume\0\0OnTouchPlay\0"
@@ -52,7 +55,8 @@ QT_MOC_LITERAL(13, 187, 9) // "nDuration"
     "OnTouchLast\0OnTouchPlayType\0"
     "OnSliderPositionMoved\0OnSliderVoiceMoved\0"
     "OnUpdatePosition\0nPosition\0OnUpdateDuration\0"
-    "nDuration"
+    "nDuration\0OnItemDoubleClicked\0"
+    "QListWidgetItem*\0item"
 };
 #undef QT_MOC_LITERAL
 
@@ -62,7 +66,7 @@ static const uint qt_meta_data_ZHPlayerBaseUI[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -70,16 +74,17 @@ static const uint qt_meta_data_ZHPlayerBaseUI[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   64,    2, 0x0a /* Public */,
-       3,    0,   65,    2, 0x0a /* Public */,
-       4,    0,   66,    2, 0x0a /* Public */,
-       5,    0,   67,    2, 0x0a /* Public */,
-       6,    0,   68,    2, 0x0a /* Public */,
-       7,    0,   69,    2, 0x0a /* Public */,
-       8,    0,   70,    2, 0x0a /* Public */,
-       9,    0,   71,    2, 0x0a /* Public */,
-      10,    1,   72,    2, 0x0a /* Public */,
-      12,    1,   75,    2, 0x0a /* Public */,
+       1,    0,   69,    2, 0x0a /* Public */,
+       3,    0,   70,    2, 0x0a /* Public */,
+       4,    0,   71,    2, 0x0a /* Public */,
+       5,    0,   72,    2, 0x0a /* Public */,
+       6,    0,   73,    2, 0x0a /* Public */,
+       7,    0,   74,    2, 0x0a /* Public */,
+       8,    0,   75,    2, 0x0a /* Public */,
+       9,    0,   76,    2, 0x0a /* Public */,
+      10,    1,   77,    2, 0x0a /* Public */,
+      12,    1,   80,    2, 0x0a /* Public */,
+      14,    1,   83,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -92,6 +97,7 @@ static const uint qt_meta_data_ZHPlayerBaseUI[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::LongLong,   11,
     QMetaType::Void, QMetaType::LongLong,   13,
+    QMetaType::Void, 0x80000000 | 15,   16,
 
        0        // eod
 };
@@ -112,6 +118,7 @@ void ZHPlayerBaseUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 7: _t->OnSliderVoiceMoved(); break;
         case 8: _t->OnUpdatePosition((*reinterpret_cast< qint64(*)>(_a[1]))); break;
         case 9: _t->OnUpdateDuration((*reinterpret_cast< qint64(*)>(_a[1]))); break;
+        case 10: _t->OnItemDoubleClicked((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -142,13 +149,13 @@ int ZHPlayerBaseUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 11)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 10;
+        _id -= 11;
     }
     return _id;
 }

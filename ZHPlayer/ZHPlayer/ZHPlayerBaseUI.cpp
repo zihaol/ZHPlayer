@@ -1,5 +1,6 @@
 #include "ZHPlayerBaseUI.h"
 #include <QFileDialog>
+#include <QListWidgetItem>
 #include <QTime>
 
 ZHPlayerBaseUI::ZHPlayerBaseUI(QWidget *parent)
@@ -15,6 +16,17 @@ ZHPlayerBaseUI::ZHPlayerBaseUI(QWidget *parent)
 	InitConfig();
 }
 
+void ZHPlayerBaseUI::UpdateMusicList()
+{
+	if (m_pMusicManager != nullptr)
+	{
+		for (std::vector<QUrl*>::iterator iter = m_pMusicManager->m_vecMusic.begin(); iter != m_pMusicManager->m_vecMusic.end(); iter++)
+		{
+			QListWidgetItem* pListItem = new QListWidgetItem((*iter)->toString());
+			ui.m_pListWidgetMusic->addItem(pListItem);
+		}
+	}
+}
 void ZHPlayerBaseUI::UpdatePlayStatus()
 {
 	ChangeType type = m_pMusicManager->GetChangType();
@@ -47,6 +59,8 @@ void ZHPlayerBaseUI::InitConfig()
 	ui.m_pSliderVoice->setValue(nVolume);
 	m_pMusicPlayer->setVolume(nVolume);
 	UpdatePlayStatus();
+	//更新歌曲列表
+	UpdateMusicList();
 	//ui.m_pLabelType->setText(u8"顺");
 }
 
@@ -62,11 +76,21 @@ void ZHPlayerBaseUI::OnTouchGetMusicPath()
 {
 	QString strFile = QFileDialog::getOpenFileName(nullptr, QString(u8"打开"), nullptr, "*.mp3");
 	m_pMusicManager->SetMusicPath(strFile);
+	UpdateMusicList();
 }
 
 void ZHPlayerBaseUI::OnUpdateDuration(qint64 nDuration)
 {
 	ui.m_pSlider->setRange(0, nDuration);
+}
+
+void ZHPlayerBaseUI::OnItemDoubleClicked(QListWidgetItem *item)
+{
+	if (m_pMusicManager != nullptr)
+	{
+		m_pMusicManager->SetCurrentMusicByName(item->text());
+		OnTouchPlay();
+	}
 }
 
 void ZHPlayerBaseUI::OnSliderVoiceMoved()
@@ -171,6 +195,7 @@ void ZHPlayerBaseUI::initConnect()
 	QObject::connect(m_pMusicPlayer, &QMediaPlayer::durationChanged, this, &ZHPlayerBaseUI::OnUpdateDuration);
 	QObject::connect(ui.m_pSlider, &QSlider::sliderMoved, this, &ZHPlayerBaseUI::OnSliderPositionMoved);
 	QObject::connect(ui.m_pSliderVoice, &QSlider::sliderMoved, this, &ZHPlayerBaseUI::OnSliderVoiceMoved);
+	QObject::connect(ui.m_pListWidgetMusic, &QListWidget::itemDoubleClicked, this, &ZHPlayerBaseUI::OnItemDoubleClicked);
 }
 
 

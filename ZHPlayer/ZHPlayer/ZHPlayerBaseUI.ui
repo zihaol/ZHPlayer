@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>528</width>
-    <height>102</height>
+    <height>329</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -158,6 +158,16 @@
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="m_pListWidgetMusic">
+    <property name="geometry">
+     <rect>
+      <x>3</x>
+      <y>93</y>
+      <width>521</width>
+      <height>230</height>
+     </rect>
     </property>
    </widget>
   </widget>

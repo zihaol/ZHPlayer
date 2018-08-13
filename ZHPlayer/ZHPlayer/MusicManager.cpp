@@ -16,6 +16,26 @@ CMusicManager::~CMusicManager()
 
 }
 
+void CMusicManager::SetCurrentMusicByName(QString strName)
+{
+	if (strName.isEmpty())
+	{
+		return;
+	}
+	QUrl* pUrl = new QUrl(strName);
+	//≈–∂œ «∑Ò”–÷ÿ∏¥
+	int nIndex = 0;
+	for (std::vector<QUrl*>::iterator iter = m_vecMusic.begin(); iter != m_vecMusic.end(); iter++)
+	{
+		if ((*pUrl) == *(*iter))
+		{
+			m_nCurMusicIndex = nIndex;
+			break;
+		}
+		nIndex++;
+	}
+}
+
 void CMusicManager::LoadMusic()
 {
 	int nIndex = 0;

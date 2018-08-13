@@ -14,6 +14,7 @@ public:
 	~ZHPlayerBaseUI();
 	void InitConfig();
 	void UpdatePlayStatus();
+	void UpdateMusicList();
 public slots:
 	void OnTouchVolume();
 	void OnTouchPlay();
@@ -26,6 +27,8 @@ public slots:
 	//QMediaPlayer信号槽
 	void OnUpdatePosition(qint64 nPosition);
 	void OnUpdateDuration(qint64 nDuration);
+	//列表点击时间
+	void OnItemDoubleClicked(QListWidgetItem *item);
 private:
 	void initConnect();
 
