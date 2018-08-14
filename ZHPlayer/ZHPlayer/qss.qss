@@ -1,0 +1,12 @@
+QPushButton#m_pBtnVolue {
+    background-color:#3dce3d;
+    color:white;
+    border:0px;
+	border-image:url(images/audioPlay.png);
+}
+
+ZHPlayerBaseUI
+{
+	border-width:0px;
+	border-style:none;
+}

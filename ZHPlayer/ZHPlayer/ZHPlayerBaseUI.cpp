@@ -14,6 +14,12 @@ ZHPlayerBaseUI::ZHPlayerBaseUI(QWidget *parent)
 	ui.m_pSliderVoice->setRange(0, 100);
 	initConnect();
 	InitConfig();
+
+	QFile qssFile("qss.qss");
+	qssFile.open(QFile::ReadOnly);
+	QString strQss;
+	strQss = qssFile.readAll();
+	this->setStyleSheet(strQss);
 }
 
 void ZHPlayerBaseUI::UpdateMusicList()
