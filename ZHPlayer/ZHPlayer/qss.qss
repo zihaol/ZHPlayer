@@ -1,9 +1,37 @@
 QPushButton#m_pBtnVolue {
-    background-color:#3dce3d;
-    color:white;
-    border:0px;
-	border-image:url(images/audioPlay.png);
+	border-image:url(images/minMainWidget.png);
 }
+
+QPushButton#m_pBtnPlay {
+	border-image:url(images/minPlayButton.png);
+}
+
+QPushButton#m_pBtnPlay:pressed {
+	border-image:url(images/minPlayButton2.png);
+}
+
+QPushButton#m_pBtnOpen {
+	border-image:url(images/minOpenFileButton.png);
+}
+
+QPushButton#m_pBtnOpen:pressed {
+	border-image:url(images/minOpenFileButton2.png);
+}
+
+QPushButton#m_pBtnLastMusic {
+	border-image:url(images/minLastButton.png);
+}
+QPushButton#m_pBtnLastMusic:pressed {
+	border-image:url(images/minLastButton2.png);
+}
+
+QPushButton#m_pBtnNextMusic {
+	border-image:url(images/minNextButton.png);
+}
+QPushButton#m_pBtnNextMusic:pressed {
+	border-image:url(images/minNextButton2.png);
+}
+
 
 ZHPlayerBaseUI
 {

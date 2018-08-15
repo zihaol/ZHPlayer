@@ -53,9 +53,9 @@ void ZHPlayerBaseUI::UpdatePlayStatus()
 		break;
 	}
 
-	if (ui.m_pLabelType != nullptr)
+	if (ui.m_pBtnChangeType != nullptr)
 	{
-		ui.m_pLabelType->setText(strStatus);
+		ui.m_pBtnChangeType->setText(strStatus);
 	}
 }
 
