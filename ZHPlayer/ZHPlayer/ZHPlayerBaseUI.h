@@ -4,6 +4,7 @@
 #include <QMediaPlayer>
 #include "ui_ZHPlayerBaseUI.h"
 #include "MusicManager.h"
+#include "SearchMusic.h"
 
 class ZHPlayerBaseUI : public QMainWindow
 {
@@ -29,6 +30,8 @@ public slots:
 	void OnUpdateDuration(qint64 nDuration);
 	//列表点击时间
 	void OnItemDoubleClicked(QListWidgetItem *item);
+	//搜索按钮
+	void OnTouchSearch();
 private:
 	void initConnect();
 
@@ -36,4 +39,5 @@ private:
 	Ui::ZHPlayerBaseUIClass			ui;
 	CMusicManager*					m_pMusicManager;
 	QMediaPlayer*					m_pMusicPlayer;
+	SearchMusic*					m_pMusicSearch;
 };

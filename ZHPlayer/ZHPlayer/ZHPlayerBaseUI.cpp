@@ -10,6 +10,7 @@ ZHPlayerBaseUI::ZHPlayerBaseUI(QWidget *parent)
 	ui.m_pSliderVoice->setVisible(false);
 	m_pMusicManager = new CMusicManager();
 	m_pMusicPlayer = new QMediaPlayer();
+	m_pMusicSearch = new SearchMusic();
 
 	ui.m_pSliderVoice->setRange(0, 100);
 	initConnect();
@@ -90,6 +91,15 @@ void ZHPlayerBaseUI::OnUpdateDuration(qint64 nDuration)
 	ui.m_pSlider->setRange(0, nDuration);
 }
 
+//ËÑË÷°´Å¥
+void ZHPlayerBaseUI::OnTouchSearch()
+{
+	if (nullptr == m_pMusicSearch)
+	{
+		return;
+	}
+	m_pMusicSearch->Search(u8"ÑÌ»ð");
+}
 void ZHPlayerBaseUI::OnItemDoubleClicked(QListWidgetItem *item)
 {
 	if (m_pMusicManager != nullptr)
@@ -202,6 +212,8 @@ void ZHPlayerBaseUI::initConnect()
 	QObject::connect(ui.m_pSlider, &QSlider::sliderMoved, this, &ZHPlayerBaseUI::OnSliderPositionMoved);
 	QObject::connect(ui.m_pSliderVoice, &QSlider::sliderMoved, this, &ZHPlayerBaseUI::OnSliderVoiceMoved);
 	QObject::connect(ui.m_pListWidgetMusic, &QListWidget::itemDoubleClicked, this, &ZHPlayerBaseUI::OnItemDoubleClicked);
+
+	QObject::connect(ui.m_pBtnSearch, SIGNAL(clicked()), this, SLOT(OnTouchSearch()));
 }
 
 

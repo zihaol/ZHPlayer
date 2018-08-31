@@ -11,7 +11,9 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
@@ -35,12 +37,16 @@ public:
     QLabel *m_pLabelTatalTime;
     QSlider *m_pSliderVoice;
     QListWidget *m_pListWidgetMusic;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout;
+    QLineEdit *m_pEditMusic;
+    QPushButton *m_pBtnSearch;
 
     void setupUi(QMainWindow *ZHPlayerBaseUIClass)
     {
         if (ZHPlayerBaseUIClass->objectName().isEmpty())
             ZHPlayerBaseUIClass->setObjectName(QStringLiteral("ZHPlayerBaseUIClass"));
-        ZHPlayerBaseUIClass->resize(528, 301);
+        ZHPlayerBaseUIClass->resize(799, 301);
         ZHPlayerBaseUIClass->setWindowOpacity(1);
         centralWidget = new QWidget(ZHPlayerBaseUIClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
@@ -79,6 +85,24 @@ public:
         m_pListWidgetMusic = new QListWidget(centralWidget);
         m_pListWidgetMusic->setObjectName(QStringLiteral("m_pListWidgetMusic"));
         m_pListWidgetMusic->setGeometry(QRect(3, 70, 521, 230));
+        widget = new QWidget(centralWidget);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setGeometry(QRect(550, 10, 216, 25));
+        horizontalLayout = new QHBoxLayout(widget);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        m_pEditMusic = new QLineEdit(widget);
+        m_pEditMusic->setObjectName(QStringLiteral("m_pEditMusic"));
+
+        horizontalLayout->addWidget(m_pEditMusic);
+
+        m_pBtnSearch = new QPushButton(widget);
+        m_pBtnSearch->setObjectName(QStringLiteral("m_pBtnSearch"));
+
+        horizontalLayout->addWidget(m_pBtnSearch);
+
         ZHPlayerBaseUIClass->setCentralWidget(centralWidget);
 
         retranslateUi(ZHPlayerBaseUIClass);
@@ -97,6 +121,7 @@ public:
         m_pBtnChangeType->setText(QString());
         m_pBtnOpen->setText(QString());
         m_pLabelTatalTime->setText(QApplication::translate("ZHPlayerBaseUIClass", "0:00", nullptr));
+        m_pBtnSearch->setText(QApplication::translate("ZHPlayerBaseUIClass", "\346\220\234\347\264\242", nullptr));
     } // retranslateUi
 
 };
