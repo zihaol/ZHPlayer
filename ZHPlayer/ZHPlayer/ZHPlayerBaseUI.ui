@@ -157,7 +157,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>550</x>
@@ -178,6 +178,16 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QListWidget" name="m_pListSearchResult">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>45</y>
+      <width>256</width>
+      <height>251</height>
+     </rect>
+    </property>
    </widget>
   </widget>
  </widget>

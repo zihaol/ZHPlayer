@@ -37,10 +37,11 @@ public:
     QLabel *m_pLabelTatalTime;
     QSlider *m_pSliderVoice;
     QListWidget *m_pListWidgetMusic;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QLineEdit *m_pEditMusic;
     QPushButton *m_pBtnSearch;
+    QListWidget *m_pListSearchResult;
 
     void setupUi(QMainWindow *ZHPlayerBaseUIClass)
     {
@@ -85,24 +86,27 @@ public:
         m_pListWidgetMusic = new QListWidget(centralWidget);
         m_pListWidgetMusic->setObjectName(QStringLiteral("m_pListWidgetMusic"));
         m_pListWidgetMusic->setGeometry(QRect(3, 70, 521, 230));
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(550, 10, 216, 25));
-        horizontalLayout = new QHBoxLayout(widget);
+        layoutWidget = new QWidget(centralWidget);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(550, 10, 216, 25));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        m_pEditMusic = new QLineEdit(widget);
+        m_pEditMusic = new QLineEdit(layoutWidget);
         m_pEditMusic->setObjectName(QStringLiteral("m_pEditMusic"));
 
         horizontalLayout->addWidget(m_pEditMusic);
 
-        m_pBtnSearch = new QPushButton(widget);
+        m_pBtnSearch = new QPushButton(layoutWidget);
         m_pBtnSearch->setObjectName(QStringLiteral("m_pBtnSearch"));
 
         horizontalLayout->addWidget(m_pBtnSearch);
 
+        m_pListSearchResult = new QListWidget(centralWidget);
+        m_pListSearchResult->setObjectName(QStringLiteral("m_pListSearchResult"));
+        m_pListSearchResult->setGeometry(QRect(540, 45, 256, 251));
         ZHPlayerBaseUIClass->setCentralWidget(centralWidget);
 
         retranslateUi(ZHPlayerBaseUIClass);

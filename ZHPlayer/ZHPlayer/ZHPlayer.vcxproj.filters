@@ -45,12 +45,18 @@
     <ClCompile Include="SearchMusic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SongSrcGetter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ZHPlayerBaseUI.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="SearchMusic.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="SongSrcGetter.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

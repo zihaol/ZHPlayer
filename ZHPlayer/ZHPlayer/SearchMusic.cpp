@@ -4,6 +4,7 @@
 //#include <QDomDocument>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
+//#include <QTextCodec>
 
 SearchMusic::SearchMusic()
 {
@@ -51,7 +52,9 @@ void SearchMusic::replyFinished(QNetworkReply* reply)
 std::string SearchMusic::GetSongIDByRegExp(QString strInfo)
 {
 	//获取id
-	QString strSongIDExp = "&quot;sid&quot;:(.+),&quot;author";
+	//QString strSongIDExp = "&quot;sid&quot;:.*(\\u[\w]{4}).*,&quot;author";
+	//QString strSongIDExp = "&quot;sid&quot;:.*([\d]+).*,&quot;author";
+	QString strSongIDExp = "&quot;sid&quot;:(.*),&quot;author";
 	//正则表达式
 	QRegularExpression regularExpression(strSongIDExp);
 	int nIndex = 0;
@@ -75,11 +78,16 @@ std::string SearchMusic::GetSongIDByRegExp(QString strInfo)
 std::string SearchMusic::GetSingerNameByRegExp(QString strInfo)
 {
 	//获取id
-	//QString strSingerExp = "sname&quot;:&quot;(.+)&quot;,&quot;oid";
-	QString strSingerExp = "sname&quot;:&quot;(.+)&quot;,&quot;oid";
+	QString strSingerExp = "author&quot;:&quot;(.+)&quot;,&quot;sname";
+	//QString strSingerExp = "author&quot;:&quot;.*(\\u\\w+).*&quot;,&quot;sname";
+	//QString strSingerExp = "author&quot;:&quot;.*((\\w{5})+).*&quot;,&quot;sname";
 	//正则表达式
 	QRegularExpression regularExpression(strSingerExp);
 	int nIndex = 0;
+
+	QString strError = regularExpression.errorString();
+
+
 	QRegularExpressionMatch match;
 	do
 	{
@@ -87,7 +95,47 @@ std::string SearchMusic::GetSingerNameByRegExp(QString strInfo)
 		if (match.hasMatch())
 		{
 			nIndex = match.capturedEnd();
-			return match.captured(1).toStdString();
+			QString strSearch = match.captured(0);
+			return GetUTF8Info(strSearch);
+		}
+		else
+		{
+			break;
+		}
+	} while (nIndex < strInfo.length());
+	return "";
+}
+
+QString SearchMusic::ConverHtmlToUTF8(QString strInfo)
+{
+	QString strRet = strInfo;
+	do 
+	{
+		int nIdx = strRet.indexOf("\\u");
+		QString strHex = strRet.mid(nIdx, 6);
+		strHex = strHex.replace("\\u", QString());
+		int nHex = strHex.toInt(0, 16);
+		strRet.replace(nIdx, 6, QChar(nHex));
+	} while (strRet.indexOf("\\u") != -1);
+	return strRet;
+}
+
+std::string SearchMusic::GetUTF8Info(QString strInfo)
+{
+	//提取编码
+	QString strExstractExp = "(\\\\(\\w){5})+";
+	QRegularExpression regularExtract(strExstractExp);
+	int nIndex = 0;
+	QRegularExpressionMatch match;
+	do 
+	{
+		match = regularExtract.match(strInfo, nIndex);
+		if (match.hasMatch())
+		{
+			nIndex = match.capturedEnd();
+			QString str = match.captured(0);
+			str = ConverHtmlToUTF8(str);
+			return str.toStdString();
 		}
 		else
 		{
@@ -100,7 +148,7 @@ std::string SearchMusic::GetSingerNameByRegExp(QString strInfo)
 std::string SearchMusic::GetEmByRegExp(QString strInfo)
 {
 	//获取id
-	QString strSingerExp = "em&gt;(.+)&lt;.*\\}\\}";
+	QString strSingerExp = "sname&quot;:&quot;.+&quot;,";
 	//正则表达式
 	QRegularExpression regularExpression(strSingerExp);
 	int nIndex = 0;
@@ -111,7 +159,9 @@ std::string SearchMusic::GetEmByRegExp(QString strInfo)
 		if (match.hasMatch())
 		{
 			nIndex = match.capturedEnd();
-			return match.captured(1).toStdString();
+			QString strInfo = match.captured(0);
+			return GetUTF8Info(strInfo);
+			//return match.captured(1).toStdString();
 		}
 		else
 		{
@@ -159,6 +209,7 @@ void SearchMusic::GetMusicInfoByRegExp(QString strSearchHtml)
 			break;
 		}
 	} while (nIndex < strSearchHtml.length());
+	emit SearchFinish(m_vMusicInfo);
 }
 
 //void SearchMusic::GetMusicUrl(const QDomElement & element)

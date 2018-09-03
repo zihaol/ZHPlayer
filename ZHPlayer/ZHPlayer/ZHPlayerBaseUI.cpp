@@ -11,6 +11,7 @@ ZHPlayerBaseUI::ZHPlayerBaseUI(QWidget *parent)
 	m_pMusicManager = new CMusicManager();
 	m_pMusicPlayer = new QMediaPlayer();
 	m_pMusicSearch = new SearchMusic();
+	m_pSongSrcGetter = new SongSrcGetter();
 
 	ui.m_pSliderVoice->setRange(0, 100);
 	initConnect();
@@ -21,6 +22,22 @@ ZHPlayerBaseUI::ZHPlayerBaseUI(QWidget *parent)
 	QString strQss;
 	strQss = qssFile.readAll();
 	this->setStyleSheet(strQss);
+}
+
+void ZHPlayerBaseUI::UpdateSearchMusicInfo(std::vector<tagMusicInfo> vMusicInfo)
+{
+	ui.m_pListSearchResult->clear();
+	for (auto musicInfo : vMusicInfo)
+	{
+		QListWidgetItem* pListItem = new QListWidgetItem();
+		char szSongInfo[128];
+		memset(szSongInfo, 0, sizeof(szSongInfo));
+		snprintf(szSongInfo, sizeof(szSongInfo), "%s ---- %s", musicInfo.strSongName.c_str(), musicInfo.strSingerName.c_str());
+		pListItem->setText(szSongInfo);
+		QString strSongID = musicInfo.strSongID.c_str();
+		pListItem->setData(Qt::UserRole, strSongID);
+		ui.m_pListSearchResult->addItem(pListItem);
+	}
 }
 
 void ZHPlayerBaseUI::UpdateMusicList()
@@ -91,6 +108,16 @@ void ZHPlayerBaseUI::OnUpdateDuration(qint64 nDuration)
 	ui.m_pSlider->setRange(0, nDuration);
 }
 
+//ËÑË÷½á¹û
+void ZHPlayerBaseUI::OnSearchResult(std::vector<tagMusicInfo> vMusicInfo)
+{
+	//for (auto i : vMusicInfo)
+	//{
+	//	std::string strName = i.strSingerName;
+	//}
+	UpdateSearchMusicInfo(vMusicInfo);
+}
+
 //ËÑË÷°´Å¥
 void ZHPlayerBaseUI::OnTouchSearch()
 {
@@ -98,8 +125,37 @@ void ZHPlayerBaseUI::OnTouchSearch()
 	{
 		return;
 	}
-	m_pMusicSearch->Search(u8"ÑÌ»ð");
+	QString strSearchInfo = ui.m_pEditMusic->text();
+	if (strSearchInfo.isEmpty())
+	{
+		return;
+	}
+	m_pMusicSearch->Search(strSearchInfo);
+	//m_pMusicSearch->Search(u8"ÑÌ»ð");
 }
+
+//ËÑË÷ÁÐ±íË«»÷
+void ZHPlayerBaseUI::OnSearchItemDoubleClicked(QListWidgetItem *item)
+{
+	if (m_pSongSrcGetter != nullptr)
+	{
+		m_pSongSrcGetter->GetSongBySongID(item->data(Qt::UserRole).toString());
+	}
+}
+
+void ZHPlayerBaseUI::GetSongSrcFinish(SongInfo pSongInfo)
+{
+	//if (pSongInfo != nullptr && pSongInfo->pSrcUrl != nullptr)
+	{
+		m_pMusicPlayer->setMedia(pSongInfo.pSrcUrl);
+		m_pMusicPlayer->play();
+	}
+	//m_pMusicManager->SetMusicPath(pSongInfo->pSrcUrl->toString());
+	//UpdateMusicList();
+	//m_pMusicManager->SetCurrentMusicByName(pSongInfo->pSrcUrl->toString());
+	//OnTouchPlay();
+}
+
 void ZHPlayerBaseUI::OnItemDoubleClicked(QListWidgetItem *item)
 {
 	if (m_pMusicManager != nullptr)
@@ -189,6 +245,7 @@ void ZHPlayerBaseUI::OnTouchPlay()
 	{
 		QUrl* pUrl = m_pMusicManager->GetCurrentMusic();
 		m_pMusicPlayer->setMedia(*pUrl);
+		//m_pMusicPlayer->setMedia(QUrl("http://zhangmenshiting.qianqian.com/data2/music/692a14470c187015824937e46dce707c/599636438/235725248400320.mp3?xcode=f3801dd3e9ffcb1de9c5304b21fec782"));
 		ui.m_pLabelMusicName->setText(pUrl->toString());
 		m_pMusicPlayer->play();
 		//QString strTime;
@@ -212,8 +269,11 @@ void ZHPlayerBaseUI::initConnect()
 	QObject::connect(ui.m_pSlider, &QSlider::sliderMoved, this, &ZHPlayerBaseUI::OnSliderPositionMoved);
 	QObject::connect(ui.m_pSliderVoice, &QSlider::sliderMoved, this, &ZHPlayerBaseUI::OnSliderVoiceMoved);
 	QObject::connect(ui.m_pListWidgetMusic, &QListWidget::itemDoubleClicked, this, &ZHPlayerBaseUI::OnItemDoubleClicked);
+	QObject::connect(m_pSongSrcGetter, &SongSrcGetter::GetSongSrcFinish, this, &ZHPlayerBaseUI::GetSongSrcFinish);
+	QObject::connect(ui.m_pListSearchResult, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(OnSearchItemDoubleClicked(QListWidgetItem *)));
 
 	QObject::connect(ui.m_pBtnSearch, SIGNAL(clicked()), this, SLOT(OnTouchSearch()));
+	QObject::connect(m_pMusicSearch, SIGNAL(SearchFinish(std::vector<tagMusicInfo>)), this, SLOT(OnSearchResult(std::vector<tagMusicInfo>)));
 }
 
 

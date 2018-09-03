@@ -26,6 +26,10 @@ public:
 	std::string GetSongIDByRegExp(QString strInfo);
 	std::string GetSingerNameByRegExp(QString strInfo);
 	std::string GetEmByRegExp(QString strInfo);
+	std::string GetUTF8Info(QString strInfo);
+	QString ConverHtmlToUTF8(QString strInfo);
+signals:
+	void SearchFinish(std::vector<tagMusicInfo>	vMusicInfo);
 public slots:
 	void replyFinished(QNetworkReply* reply);
 private:
